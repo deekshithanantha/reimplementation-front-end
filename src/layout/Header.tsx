@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState } from "react";
 import { Button, Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -39,7 +39,7 @@ const Header: React.FC = () => {
             alignItems: "center",
           }}
         >
-          <img src={detective} width={25} style={{ marginRight: 4 }} />
+          <img src={detective} alt="detective" width={25} style={{ marginRight: 4 }} />
           <div>Anonymized View</div>
           <button
             style={{
@@ -143,7 +143,7 @@ const Header: React.FC = () => {
                     </NavDropdown.Item>
                   </NavDropdown>
                 )}
-                <Nav.Link as={Link} to="/student_tasks">
+                <Nav.Link as={Link} to="/assignments">
                   Assignments
                 </Nav.Link>
                 <Nav.Link as={Link} to="/profile">
