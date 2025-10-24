@@ -109,8 +109,20 @@ const CourseAssignments: React.FC<CourseAssignmentsProps> = ({ courseId, courseN
   }, [fetchAssignments]);
 
   const getAssignmentColumns = (actions: ActionHandler[]) => {
-    let baseColumns = getBaseAssignmentColumns(() => {}, () => {}).filter(col => 
-      !['edit', 'delete', 'actions'].includes(String(col.id))
+    // Create dummy functions for the checkbox functionality since CourseAssignments doesn't need it
+    const dummySelectHandler = () => {};
+    const dummySelectAllHandler = () => {};
+    const dummySelectedAssignments: number[] = [];
+    const dummyData: any[] = [];
+    let baseColumns = getBaseAssignmentColumns(
+      () => {}, // handleEdit
+      () => {}, // handleDelete
+      dummySelectHandler, // handleSelect
+      dummySelectAllHandler, // handleSelectAll
+      dummySelectedAssignments, // selectedAssignments
+      dummyData // data
+    ).filter(col => 
+      !['select', 'edit', 'delete', 'actions'].includes(String(col.id))
     );
     baseColumns = baseColumns.filter(col => col.header !== 'Course Name');
 

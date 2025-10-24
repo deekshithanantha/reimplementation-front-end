@@ -1,9 +1,9 @@
-import { Button, Col, Container, Row } from "react-bootstrap";
+import { Button, Col, Container, Row, Form } from "react-bootstrap";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { assignmentColumns as ASSIGNMENT_COLUMNS } from "./AssignmentColumns";
-import { BsFileText } from "react-icons/bs";
+import { BsFileText, BsTrash } from "react-icons/bs";
 import DeleteAssignment from "./AssignmentDelete";
 import { IAssignmentResponse } from "../../utils/interfaces";
 import { RootState } from "../../store/store";
@@ -30,6 +30,8 @@ const Assignments = () => {
     visible: boolean;
     data?: IAssignmentResponse;
   }>({ visible: false });
+
+  const [selectedAssignments, setSelectedAssignments] = useState<number[]>([]);
 
 
   const fetchData = useCallback(async () => {
@@ -81,9 +83,30 @@ const Assignments = () => {
     []
   );
 
+  const handleAssignmentSelect = useCallback((assignmentId: number, isSelected: boolean) => {
+    setSelectedAssignments(prev => 
+      isSelected 
+        ? [...prev, assignmentId]
+        : prev.filter(id => id !== assignmentId)
+    );
+  }, []);
+
+  const handleSelectAll = useCallback((isSelected: boolean) => {
+    setSelectedAssignments(isSelected ? mergedData.map((a: any) => a.id) : []);
+  }, [mergedData]);
+
+  const handleBulkDelete = useCallback(() => {
+    if (selectedAssignments.length > 0) {
+      // Handle bulk delete logic here
+      console.log('Bulk deleting assignments:', selectedAssignments);
+      // You can implement the actual bulk delete API call here
+      setSelectedAssignments([]);
+    }
+  }, [selectedAssignments]);
+
   const tableColumns = useMemo(
-    () => ASSIGNMENT_COLUMNS(onEditHandle, onDeleteHandle),
-    [onDeleteHandle, onEditHandle]
+    () => ASSIGNMENT_COLUMNS(onEditHandle, onDeleteHandle, handleAssignmentSelect, handleSelectAll, selectedAssignments, mergedData || []),
+    [onDeleteHandle, onEditHandle, handleAssignmentSelect, handleSelectAll, selectedAssignments, mergedData]
   );
 
   const tableData = useMemo(
@@ -103,7 +126,19 @@ const Assignments = () => {
             <hr />
           </Row>
           <Row>
-            <Col md={{ span: 1, offset: 11 }}>
+            <Col md={6}>
+              {selectedAssignments.length > 0 && (
+                <Button 
+                  variant="outline-danger" 
+                  onClick={handleBulkDelete}
+                  className="d-flex align-items-center me-2"
+                >
+                  <BsTrash className="me-1" />
+                  Delete Selected ({selectedAssignments.length})
+                </Button>
+              )}
+            </Col>
+            <Col md={6} className="text-end">
               <Button variant="outline-info" onClick={() => navigate("new")} className="d-flex align-items-center">
                 <span className="me-1">Create</span><BsFileText />
               </Button>

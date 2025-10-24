@@ -22,6 +22,7 @@ import { Tabs, Tab } from 'react-bootstrap';
 import '../../custom.scss';
 import { faUsers } from '@fortawesome/free-solid-svg-icons';
 import { faClipboardList } from '@fortawesome/free-solid-svg-icons';
+import { faList } from '@fortawesome/free-solid-svg-icons';
 
 const initialValues: IAssignmentFormValues = {
   name: "",
@@ -201,6 +202,10 @@ const AssignmentEditor: React.FC<IEditor> = ({ mode }) => {
               <div className="custom-tab-button" onClick={() => navigate(`/assignments/edit/${assignmentData.id}/viewdelayedjobs`)}>
                 <FontAwesomeIcon icon={faClock} className="icon" />
                 <span>View Delayed Jobs</span>
+              </div>
+              <div className="custom-tab-button" onClick={() => navigate(`/assignments/edit/${assignmentData.id}/topics`)}>
+                <FontAwesomeIcon icon={faList} className="icon" />
+                <span>Manage Topics</span>
               </div>
             </div>
 
