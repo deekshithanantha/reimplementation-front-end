@@ -40,7 +40,6 @@ import ViewSubmissions from "pages/Assignments/ViewSubmissions";
 import ViewScores from "pages/Assignments/ViewScores";
 import ViewReports from "pages/Assignments/ViewReports";
 import ViewDelayedJobs from "pages/Assignments/ViewDelayedJobs";
-import TopicManagement from "pages/Assignments/TopicManagement";
 function App() {
   const router = createBrowserRouter([
     {
@@ -89,11 +88,6 @@ function App() {
         {
           path: "assignments/edit/:id/viewdelayedjobs",
           element: <ViewDelayedJobs />,
-          loader: loadAssignment,
-        },
-        {
-          path: "assignments/edit/:id/topics",
-          element: <TopicManagement />,
           loader: loadAssignment,
         },
         {
