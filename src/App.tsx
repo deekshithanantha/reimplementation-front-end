@@ -42,6 +42,7 @@ import ViewSubmissions from "pages/Assignments/ViewSubmissions";
 import ViewScores from "pages/Assignments/ViewScores";
 import ViewReports from "pages/Assignments/ViewReports";
 import ViewDelayedJobs from "pages/Assignments/ViewDelayedJobs";
+import ReviewReportPage from "pages/Reviews/ReviewReportPage";
 function App() {
   const router = createBrowserRouter([
     {
@@ -121,6 +122,11 @@ function App() {
               element: <UserEditor mode="update" />,
               loader: loadUserDataRolesAndInstitutions,
             },
+            {
+              path: ":id",
+              element: <UserEditor mode="update" />,
+              loader: loadUserDataRolesAndInstitutions,
+            },
           ],
         },
         {
@@ -193,11 +199,11 @@ function App() {
         },
         {
           path: "reviews",
-          element: <Reviews/>,
+          element: <Reviews />,
         },
         {
           path: "email_the_author",
-          element: <Email_the_author/>,
+          element: <Email_the_author />,
         },
         {
           path: "student_tasks",
@@ -206,6 +212,10 @@ function App() {
         {
           path: "student_tasks/:assignmentId",
           element: <ProtectedRoute element={<StudentTasks />} />,
+        },
+        {
+          path: "assignments/:id/review",
+          element: <ReviewReportPage />,
         },
         // Fixed the missing comma and added an opening curly brace
         {
